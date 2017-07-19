@@ -32,6 +32,7 @@ module.exports = {
         loader: 'eslint-loader',
         enforce: 'pre',
         include: [resolve('src'), resolve('test')],
+        exclude: [resolve('src/shimming-modules')],
         options: {
           formatter: require('eslint-friendly-formatter')
         }
@@ -44,7 +45,8 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        include: [resolve('src'), resolve('test')],
+        exclude: [resolve('src/shimming-modules')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
