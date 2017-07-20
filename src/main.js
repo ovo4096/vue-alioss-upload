@@ -1,29 +1,20 @@
-import 'imports-loader?module=>false,define=>false,require=>false,exports=>false!@/shimming-modules/aliyun-oss-sdk.min'
-import oss from '../oss.env'
+// import 'imports-loader?module=>false,define=>false,require=>false,exports=>false!@/shimming-modules/aliyun-oss-sdk.min'
 
 import Vue from 'vue'
-import App from '@/App'
+import VueResource from 'vue-resource'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
+import app from '@/app'
 
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
-new Vue({
+Vue.use(VueResource)
+Vue.use(ElementUI)
+
+let main = () => (new Vue({
   el: '#app',
-  template: '<App/>',
-  components: {App}
-})
+  template: '<app/>',
+  components: {app}
+}))
 
-let client = new global.OSS.Wrapper({
-  accessKeyId: oss.accessKey.id,
-  accessKeySecret: oss.accessKey.secret,
-  region: oss.bucket.region,
-  bucket: oss.bucket.name
-})
-
-client.list({
-  'max-keys': 10
-}).then(function (result) {
-  console.log(result)
-}).catch(function (err) {
-  console.log(err)
-})
+main()
