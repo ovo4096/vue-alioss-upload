@@ -22,18 +22,22 @@
     },
     methods: {
       submitUpload () {
-        this.$http.get('http://127.0.0.1/tests/get.php').then(response => {
+        this.$http.get('http://127.0.0.1/tests/bootstrap.php').then(response => {
           let data = response.data
-          let upload = this.$refs.upload
+
           this.action = data.host
-          this.data.name = upload.uploadFiles[0].name
-          this.data.key = `${data.dir}$\{filename}`
-          this.data.policy = data.policy
-          this.data.OSSAccessKeyId = data.accessid
-          this.data.signature = data.signature
-          this.$refs.upload.submit()
+
+          this.$nextTick(() => {
+            this.data.key = `${data.dir}$\{filename}`
+            this.data.policy = data.policy
+            this.data.OSSAccessKeyId = data.accessKeyId
+            this.data.signature = data.signature
+            this.$refs.upload.submit()
+          })
         }, response => {
           console.log(response)
+        }).catch(err => {
+          console.log(err)
         })
       },
       handleRemove (file, fileList) {
